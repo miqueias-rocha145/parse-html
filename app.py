@@ -67,7 +67,7 @@ if __name__ == '__main__':
     arquivo_html = pasta_atual / 'view_lista.html'
 
     remover_item(
-        'Aldfsd',
+        'Passear com cachorro',
         arquivo_html,
         pasta_atual / 'novo_html.html'
     )
