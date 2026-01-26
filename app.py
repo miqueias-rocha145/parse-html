@@ -71,3 +71,5 @@ if __name__ == '__main__':
         arquivo_html,
         pasta_atual / 'novo_html.html'
     )
+
+    print('Hello World!!!!!!')
