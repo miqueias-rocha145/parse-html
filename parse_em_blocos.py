@@ -14,26 +14,35 @@ def removendo_item(
             item_a_remover: str
             ) -> list[str]:
         
-    removido = False
-    escrever = True
+    escrever_bloco = True
     novo_html_list = []
+    bloco_temp_html = []
+    dentro_bloco = False
 
     for i,item in enumerate(lista_html):
+        
+        if item.strip().startswith("<li class"):
+            dentro_bloco = True
 
-        if not removido:
-            if i + 2 < len(lista_html) and item_a_remover in lista_html[i + 2]:
-                escrever = False
-                removido = True
-                continue
+        if dentro_bloco:
 
-        if escrever:
-            novo_html_list.append(item)
+            if item_a_remover == item.strip():
+                escrever_bloco = False
 
-        if "</li>" in item:
-            escrever = True
+            bloco_temp_html.append(item)
 
-    if not removido:
-        print('Item não encontrado! Verifique ortografia.')
+            if item.strip().startswith("</li>"):
+                dentro_bloco = False
+                
+                if escrever_bloco:
+                    novo_html_list.extend(bloco_temp_html)
+                
+                bloco_temp_html = []
+                escrever_bloco = True
+
+            continue
+
+        novo_html_list.append(item)
         
     return novo_html_list
 
@@ -67,9 +76,7 @@ if __name__ == '__main__':
     arquivo_html = pasta_atual / 'view_lista.html'
 
     remover_item(
-        'Passear com cachorro',
+        'Almoçar',
         arquivo_html,
         pasta_atual / 'novo_html.html'
     )
-
-    print('Hello World!!!!!!')
